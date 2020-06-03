@@ -1,0 +1,38 @@
+{
+    "cols": [
+      {
+        "title": "План",
+        "tasks":
+        [
+          {
+            "name": "Task1",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
+          },
+          {
+            "name": "Task2",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
+          }
+        ]
+      },
+      {
+        "title": "В работе",
+        "tasks":
+        [
+          {
+            "name": "Task1",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
+          }
+        ]
+      },
+      {
+        "title": "Готово",
+        "tasks":
+        [
+          {
+            "name": "Task1",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
+          }
+        ]
+      }
+    ]
+}

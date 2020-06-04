@@ -4,6 +4,7 @@
                 v-for="col in COLS"
                 :key="col.title"
                 :col-data="col"
+
         ></v-cols-item>
 
     </div>
@@ -22,7 +23,7 @@
         methods: {
             ...mapActions([
                 'GET_COLS_FROM_API'
-            ])
+            ]),
         },
         computed: {
             ...mapGetters([

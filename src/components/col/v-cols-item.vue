@@ -3,14 +3,17 @@
         <div class="v-cols-item__title">{{colData.title}} ({{colData.tasks.length}})</div>
         <v-cols-item-task
                 v-for="task in colData.tasks"
-                :key="task.name"
+                :key="task.id"
                 :task="task"
+                @confirmTask="confirmTask"
+
         ></v-cols-item-task>
     </div>
 </template>
 
 <script>
-    import vColsItemTask from './v-cols-item-task'
+    import vColsItemTask from './v-cols-item-task';
+    import {mapActions} from 'vuex';
 
     export default {
         name: "v-cols-item",
@@ -25,6 +28,17 @@
                 }
             }
         },
+        methods: {
+            ...mapActions([
+                'CONFIRM_TASK'
+            ]),
+            confirmTask(task) {
+                this.CONFIRM_TASK({
+                    col: this.colData,
+                    task: task
+                })
+            }
+        }
     }
 </script>
 
@@ -39,7 +53,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        &__title{
+
+        &__title {
             font-size: 22px;
             font-weight: 700;
         }

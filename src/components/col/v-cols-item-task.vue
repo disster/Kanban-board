@@ -1,10 +1,13 @@
 <template>
     <div class="v-cols-item-task">
-        <p>{{task.name}}</p>
+        <p>Задача №{{task.id}}</p>
         <p>{{task.description}}</p>
-        <img class="v-cols-item-task__icon" :src="require('../../assets/images/edit.png')" alt="">
-        <img class="v-cols-item-task__icon" :src="require('../../assets/images/confirm.png')" alt="">
-
+        <button  class="v-cols-item-task__button button">
+            <img :src="require('../../assets/images/edit.png')" alt="">
+        </button>
+        <button @click="confirmTask" class="v-cols-item-task__button button">
+            <img :src="require('../../assets/images/confirm.png')" alt="">
+        </button>
     </div>
 </template>
 
@@ -22,6 +25,11 @@
                 }
             }
         },
+        methods: {
+            confirmTask() {
+                this.$emit('confirmTask', this.task);
+            }
+        }
     }
 </script>
 
@@ -35,15 +43,20 @@
         padding: $padding*2;
         background-color: #fff;
 
-        &__icon {
+        &__button {
             position: absolute;
             width: 30px;
             height: 30px;
             bottom: 10px;
             right: 50px;
+            cursor: pointer;
         }
-        &__icon:last-child {
+        &__button:last-child {
             right: 10px;
+        }
+        &__button img {
+            width: 100%;
+            height: 100%;
         }
 
     }

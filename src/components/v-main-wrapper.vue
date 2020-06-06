@@ -1,7 +1,7 @@
 <template>
     <div class="v-main-wrapper">
         <div class="container">
-            <h1>Canban</h1>
+            <h1 class="v-main-wrapper__title">Canban</h1>
             <v-add-task></v-add-task>
             <v-cols></v-cols>
         </div>
@@ -22,5 +22,11 @@
 </script>
 
 <style lang="scss" scoped>
-
+    .v-main-wrapper {
+        &__title {
+            text-align: center;
+            margin-top: 5vh;
+            font-size: 40px;
+        }
+    }
 </style>

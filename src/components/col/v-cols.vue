@@ -6,7 +6,6 @@
                 :col-data="col"
 
         ></v-cols-item>
-
     </div>
 </template>
 
@@ -39,7 +38,7 @@
 
 <style lang="scss" scoped>
     .v-cols {
-        margin-top: 100px;
+        margin-top: 30px;
         display: flex;
         justify-content: space-between;
     }

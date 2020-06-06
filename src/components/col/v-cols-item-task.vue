@@ -1,22 +1,40 @@
 <template>
     <div class="v-cols-item-task">
+        <v-modal-window
+                v-if="isModalWindowVisible"
+                @closeModalWindow="closeModalWindow"
+                :task="task"
+        ></v-modal-window>
         <p>Задача №{{task.id}}</p>
-        <p>{{task.description}}</p>
-        <button  class="v-cols-item-task__button button">
-            <img :src="require('../../assets/images/edit.png')" alt="">
+        <p class="v-cols-item-task__description">{{task.description}}</p>
+        <button
+                class="v-cols-item-task__button button"
+                @click="editTask"
+        >
+            <i class="material-icons v-cols-item-task__icon">edit</i>
         </button>
-        <button @click="confirmTask" class="v-cols-item-task__button button">
-            <img :src="require('../../assets/images/confirm.png')" alt="">
+        <button
+                class="v-cols-item-task__button button"
+                @click="confirmTask"
+        >
+            <i class="material-icons v-cols-item-task__icon">{{task.iconName}}</i>
         </button>
     </div>
 </template>
 
 <script>
-
+    import vModalWindow from '../v-modal-window'
 
     export default {
         name: "v-cols-item-task",
-        components: {},
+        components: {
+            vModalWindow
+        },
+        data() {
+            return {
+                isModalWindowVisible:false
+            }
+        },
         props: {
             task: {
                 type: Object,
@@ -28,7 +46,14 @@
         methods: {
             confirmTask() {
                 this.$emit('confirmTask', this.task);
+            },
+            editTask(){
+                this.isModalWindowVisible = true;
+            },
+            closeModalWindow(){
+                this.isModalWindowVisible = false
             }
+
         }
     }
 </script>
@@ -37,7 +62,7 @@
     .v-cols-item-task {
         position: relative;
         margin-top: $margin*4;
-        height: 18vh;
+        height: 200px;
         width: 90%;
         border-radius: $border-radius;
         padding: $padding*2;
@@ -47,18 +72,25 @@
             position: absolute;
             width: 30px;
             height: 30px;
-            bottom: 10px;
+            bottom: 15px;
             right: 50px;
             cursor: pointer;
         }
+
         &__button:last-child {
             right: 10px;
         }
-        &__button img {
+
+        &__icon, {
             width: 100%;
             height: 100%;
+            font-size: 35px;
         }
 
+        &__description {
+            height: 170px;
+
+        }
     }
 
 </style>

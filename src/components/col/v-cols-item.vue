@@ -6,7 +6,6 @@
                 :key="task.id"
                 :task="task"
                 @confirmTask="confirmTask"
-
         ></v-cols-item-task>
     </div>
 </template>
@@ -38,11 +37,30 @@
                     task: task
                 })
             }
-        }
+        },
+
     }
 </script>
 
 <style lang="scss" scoped>
+    ::-webkit-scrollbar {
+        width: 13px;
+
+    }
+
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 10px 10px #F3F3F3;
+        border: solid 3px transparent;
+        border-radius: 20px;
+
+    }
+
+    ::-webkit-scrollbar-thumb {
+        box-shadow: inset 0 0 10px 10px #E0E0E0;
+        border: solid 3px transparent;
+        border-radius: 20px;
+    }
+
     .v-cols-item {
         padding: $padding*3 $padding;
         border: 1px solid #ccc;
@@ -53,6 +71,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-y:overlay;
 
         &__title {
             font-size: 22px;

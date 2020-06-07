@@ -47,13 +47,16 @@
                     </div>
                     <div class="v-modal-window__content__item">
                         <p>Дата и время начала</p>
-                        <input
-                                type="text"
-                                placeholder="Введите дату"
-                                :disabled="isBeginDateDisabled"
+                        <date-picker
+                                type="datetime"
+                                default-value="new Date()"
+                                format="DD.MM.YYYY HH:mm"
                                 v-model="editedTask.beginDate"
-
+                                :lang="ru"
+                                confirm="true"
                         >
+
+                        </date-picker>
                         <div class="v-modal-window__error">
                             {{errors.beginDate}}
                         </div>
@@ -84,8 +87,16 @@
 </template>
 
 <script>
+    import {mapActions} from 'vuex';
+    import datePicker from 'vue2-datepicker';
+    import 'vue2-datepicker/index.css';
+    import 'vue2-datepicker/locale/ru';
+
     export default {
         name: "v-modal-window",
+        components: {
+            datePicker
+        },
         data() {
             return {
                 editedTask: {
@@ -114,18 +125,20 @@
             }
         },
         methods: {
+            ...mapActions(['CHANGE_TASK']),
             closeModalWindow() {
                 this.$emit('closeModalWindow')
             },
             confirmChanges() {
                 this.validateData();
-                if (this.isDataValid()){
+                if (this.isDataValid()) {
+                    this.CHANGE_TASK(this.editedTask);
                     this.closeModalWindow();
                 }
             },
-            isDataValid(){
+            isDataValid() {
                 for (let key in this.errors) {
-                    if (this.errors[key] != ''){
+                    if (this.errors[key] != '') {
                         return false;
                     }
                 }
@@ -169,14 +182,16 @@
                 }
                 return false;
             },
-
+        },
+        mounted() {
         }
     }
 </script>
 
 <style lang="scss" scoped>
+
     .v-modal-window {
-        z-index: 999;
+        z-index: 0;
         height: 70vh;
         width: 35vw;
         min-height: 500px;
@@ -194,7 +209,7 @@
             position: fixed;
             left: 0;
             top: 0;
-            z-index: 9999;
+            z-index: 100;
         }
 
         &__content {
@@ -209,6 +224,7 @@
                     width: 100%;
                     padding: 10px;
                     margin-top: 7px;
+                    border: none;
                 }
 
                 p {
@@ -264,4 +280,14 @@
     }
 
 
+</style>
+<style>
+    .mx-datepicker {
+        width: 100%;
+        margin-top: 7px;
+    }
+
+    .mx-input {
+        height: 35px !important;
+    }
 </style>

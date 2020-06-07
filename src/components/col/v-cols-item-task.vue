@@ -7,6 +7,9 @@
         ></v-modal-window>
         <p>Задача №{{task.id}}</p>
         <p class="v-cols-item-task__description">{{task.description}}</p>
+        <p class="v-cols-item-task__date" v-if="task.beginDate != undefined">Дата и время начала: {{task.beginDate}}</p>
+        <p class="v-cols-item-task__date" v-if="task.finishDate != undefined">Ушло времени: {{task.finishDate}}</p>
+        <p class="v-cols-item-task__responsible"  v-if="task.responsible != undefined"> Ответственный {{task.responsible}}</p>
         <button
                 class="v-cols-item-task__button button"
                 @click="editTask"
@@ -32,7 +35,7 @@
         },
         data() {
             return {
-                isModalWindowVisible:false
+                isModalWindowVisible: false
             }
         },
         props: {
@@ -47,10 +50,10 @@
             confirmTask() {
                 this.$emit('confirmTask', this.task);
             },
-            editTask(){
+            editTask() {
                 this.isModalWindowVisible = true;
             },
-            closeModalWindow(){
+            closeModalWindow() {
                 this.isModalWindowVisible = false
             }
 
@@ -67,6 +70,7 @@
         border-radius: $border-radius;
         padding: $padding*2;
         background-color: #fff;
+        min-height: 200px;
 
         &__button {
             position: absolute;
@@ -88,7 +92,7 @@
         }
 
         &__description {
-            height: 170px;
+            /*height: 170px;*/
 
         }
     }

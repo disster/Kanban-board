@@ -37,6 +37,18 @@ function setStatus(state) {
     }
 }
 
+function lastTaskNumber(state) {
+    let maxNumber = 0;
+    for (let col of state.cols) {
+        for (let task of col.tasks) {
+            if (Number(task.id) > maxNumber){
+                maxNumber = Number(task.id)
+            }
+        }
+    }
+    return maxNumber;
+}
+
 Vue.use(Vuex);
 
 let store = new Vuex.Store({
@@ -51,18 +63,8 @@ let store = new Vuex.Store({
         },
 
         ADD_TASK_TO_COLS: (state, task) => {
-            function tasksQuantity() {
-                let counter = 0;
-                if (state.cols.length) {
-                    for (let col of state.cols) {
-                        counter += col.tasks.length
-                    }
-                }
-                return counter;
-            }
-
             state.cols[0].tasks.push({
-                id: tasksQuantity() + 1,
+                id: String(lastTaskNumber(state)+1),
                 description: task,
                 status: "План"
             });
@@ -77,17 +79,26 @@ let store = new Vuex.Store({
                 let task = state.cols[colIndex].tasks[taskIndex];
                 state.cols[colIndex].tasks.splice(taskIndex, 1);
                 state.cols[colIndex + 1].tasks.push(task);
-                // if (colIndex == 0){
-                //     state.cols[colIndex + 1].tasks[state.cols[colIndex + 1].tasks.length].status = 'doing';
-                // } else {
-                //     state.cols[colIndex + 1].tasks[state.cols[colIndex + 1].tasks.length].status = 'done'
-                // }
             } else {
                 let colIndex = state.cols.length - 1
                 let taskIndex = getTaskIndex(state, colIndex, taskId);
                 state.cols[colIndex].tasks.splice(taskIndex, 1);
             }
             setIcons(state);
+            setStatus(state);
+        },
+        CHANGE_TASK: (state, data) => {
+            for (let col of state.cols) {
+                for (let task of col.tasks) {
+                    if (task.id == data.id){
+                        task.description = data.description;
+                        task.status = data.status;
+                        task.responsible = data.responsible;
+                        task.beginDate = data.beginDate;
+                        task.finishDate = data.finishDate;
+                    }
+                }
+            }
         }
     },
     actions: {
@@ -110,6 +121,9 @@ let store = new Vuex.Store({
         },
         CONFIRM_TASK({commit}, data) {
             commit('MOVE_TASK', data);
+        },
+        CHANGE_TASK({commit}, data) {
+            commit('CHANGE_TASK', data);
         },
     },
     getters:

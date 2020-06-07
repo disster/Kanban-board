@@ -1,7 +1,7 @@
 <template>
     <div class="v-main-wrapper">
         <div class="container">
-            <h1 class="v-main-wrapper__title">Canban</h1>
+            <h1 class="v-main-wrapper__title">Kanban Board</h1>
             <v-add-task></v-add-task>
             <v-cols></v-cols>
         </div>

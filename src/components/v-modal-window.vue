@@ -25,6 +25,7 @@
                         <select
                                 name="status"
                                 v-model="editedTask.status"
+                                @change="changeStatus()"
                         >
                             <option value="План">План</option>
                             <option value="В работе">В работе</option>
@@ -49,11 +50,13 @@
                         <p>Дата и время начала</p>
                         <date-picker
                                 type="datetime"
-                                default-value="new Date()"
-                                format="DD.MM.YYYY HH:mm"
+                                format="DD.MM.YYYY HH:mm:ss"
                                 v-model="editedTask.beginDate"
-                                :lang="ru"
-                                confirm="true"
+                                :disabled="isBeginDateDisabled"
+                                :confirm="true"
+                                placeholder="Введите дату и время начала"
+                                :editable="false"
+                                :default-value="defaultDate"
                         >
 
                         </date-picker>
@@ -63,12 +66,17 @@
                     </div>
                     <div class="v-modal-window__content__item">
                         <p>Дата и время завершения</p>
-                        <input
-                                type="text"
-                                placeholder="Введите дату"
-                                :disabled="isFinishDateDisabled"
+                        <date-picker
+                                type="datetime"
+                                format="DD.MM.YYYY HH:mm:ss"
                                 v-model="editedTask.finishDate"
+                                :disabled="isFinishDateDisabled"
+                                :confirm="true"
+                                placeholder="Введите дату и время конца"
+                                :editable="false"
+                                :default-value="defaultDate"
                         >
+                        </date-picker>
                         <div class="v-modal-window__error">
                             {{errors.finishDate}}
                         </div>
@@ -90,7 +98,6 @@
     import {mapActions} from 'vuex';
     import datePicker from 'vue2-datepicker';
     import 'vue2-datepicker/index.css';
-    import 'vue2-datepicker/locale/ru';
 
     export default {
         name: "v-modal-window",
@@ -152,36 +159,73 @@
             },
             validateData() {
                 this.errors.description = this.isInputEmpty(this.editedTask.description);
-                if (this.task.status != 'План') {
+                if (this.task.status == 'В работе' && this.editedTask.status == 'В работе') {
                     this.errors.responsible = this.isInputEmpty(this.editedTask.responsible);
-                }
-                if (this.task.status != 'План') {
                     this.errors.beginDate = this.isInputEmpty(this.editedTask.beginDate);
-                }
-                if (this.task.status == 'Готово') {
+                } else if (this.task.status == 'В работе' && this.editedTask.status == 'Готово') {
+                    this.errors.responsible = this.isInputEmpty(this.editedTask.responsible);
+                    this.errors.beginDate = this.isInputEmpty(this.editedTask.beginDate);
+                    this.errors.finishDate = this.isInputEmpty(this.editedTask.finishDate);
+                } else if (this.task.status == 'Готово' && this.editedTask.status == 'В работе') {
+                    this.errors.responsible = this.isInputEmpty(this.editedTask.responsible);
+                    this.errors.beginDate = this.isInputEmpty(this.editedTask.beginDate);
+                } else if (this.task.status == 'Готово' && this.editedTask.status == 'Готово') {
+                    this.errors.responsible = this.isInputEmpty(this.editedTask.responsible);
+                    this.errors.beginDate = this.isInputEmpty(this.editedTask.beginDate);
+                    this.errors.finishDate = this.isInputEmpty(this.editedTask.finishDate);
+                } else if (this.task.status == 'План' && this.editedTask.status == 'В работе') {
+                    this.errors.responsible = this.isInputEmpty(this.editedTask.responsible);
+                    this.errors.beginDate = this.isInputEmpty(this.editedTask.beginDate);
+                } else if (this.task.status == 'План' && this.editedTask.status == 'Готово') {
+                    this.errors.responsible = this.isInputEmpty(this.editedTask.responsible);
+                    this.errors.beginDate = this.isInputEmpty(this.editedTask.beginDate);
                     this.errors.finishDate = this.isInputEmpty(this.editedTask.finishDate);
                 }
             },
+            changeStatus() {
+                if (this.editedTask.status == 'В работе') {
+                    if (this.editedTask.beginDate === undefined){
+                        this.editedTask.beginDate = new Date();
+                    }
+                    this.editedTask.finishDate = undefined;
+                } else if (this.editedTask.status == 'Готово') {
+                    if (this.editedTask.beginDate === undefined){
+                        this.editedTask.beginDate = new Date();
+                    }
+                    if (this.editedTask.finishDate === undefined){
+                        this.editedTask.finishDate = new Date();
+                    }
+                } else  {
+                    this.editedTask.beginDate = undefined;
+                    this.editedTask.finishDate = undefined;
+                    this.editedTask.responsible = undefined;
+                }
+            }
         },
         computed: {
             isBeginDateDisabled() {
-                if (this.task.status == 'План') {
+                if (this.editedTask.status == 'План') {
                     return true;
                 }
                 return false;
             },
             isFinishDateDisabled() {
-                if (this.task.status == 'Готово') {
+                if (this.editedTask.status == 'Готово') {
                     return false;
                 }
                 return true;
             },
             isResponsibleDisabled() {
-                if (this.task.status == 'План') {
+                if (this.editedTask.status == 'План') {
                     return true;
                 }
                 return false;
             },
+            defaultDate() {
+                let date = new Date();
+                date.setSeconds(0);
+                return date;
+            }
         },
         mounted() {
         }
@@ -225,6 +269,10 @@
                     padding: 10px;
                     margin-top: 7px;
                     border: none;
+                }
+
+                input[disabled="disabled"] {
+                    background-color: #3DB494;
                 }
 
                 p {
@@ -287,7 +335,13 @@
         margin-top: 7px;
     }
 
+    .mx-input[disabled="disabled"] {
+        background-color: #3DB494;
+        cursor: default;
+    }
+
     .mx-input {
         height: 35px !important;
+        border: none;
     }
 </style>

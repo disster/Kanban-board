@@ -6,10 +6,14 @@
                 :task="task"
         ></v-modal-window>
         <p>Задача №{{task.id}}</p>
-        <p class="v-cols-item-task__description">{{task.description}}</p>
-        <p class="v-cols-item-task__date" v-if="task.beginDate != undefined">Дата и время начала: {{task.beginDate}}</p>
-        <p class="v-cols-item-task__date" v-if="task.finishDate != undefined">Ушло времени: {{task.finishDate}}</p>
-        <p class="v-cols-item-task__responsible"  v-if="task.responsible != undefined"> Ответственный {{task.responsible}}</p>
+        <div class="v-cols-item-task__content">
+            <p class="v-cols-item-task__description">{{task.description}}</p>
+            <p class="v-cols-item-task__date" v-if="isEmpty(task.beginDate)">Дата и время начала:
+                {{formattingDate(task.beginDate)}}</p>
+            <p class="v-cols-item-task__date" v-if="isEmpty(task.finishDate)">Ушло времени: {{spendTime()}}</p>
+            <p class="v-cols-item-task__responsible" v-if="isEmpty(task.responsible)"> Ответственный:
+                <span class="responsible">{{task.responsible}}</span></p>
+        </div>
         <button
                 class="v-cols-item-task__button button"
                 @click="editTask"
@@ -47,6 +51,9 @@
             }
         },
         methods: {
+            isEmpty(input) {
+                return input != "" && input != undefined;
+            },
             confirmTask() {
                 this.$emit('confirmTask', this.task);
             },
@@ -55,13 +62,57 @@
             },
             closeModalWindow() {
                 this.isModalWindowVisible = false
-            }
+            },
 
+            formattingDate(date) {
+                let day = date.getDate();
+                if (day < 10) {
+                    day = '0' + day
+                }
+                let month = date.getMonth() + 1;
+                if (month < 10) {
+                    month = '0' + month
+                }
+                let year = date.getFullYear();
+                if (year < 10) {
+                    year = '0' + year
+                }
+                let hours = date.getHours();
+                if (hours < 10) {
+                    hours = '0' + hours
+                }
+                let minutes = date.getMinutes();
+                if (minutes < 10) {
+                    minutes = '0' + minutes
+                }
+                let seconds = date.getSeconds();
+                if (seconds < 10) {
+                    seconds = '0' + seconds
+                }
+                return day + '.' + month + '.' + year + " " + hours + ":" + minutes + ":" + seconds;
+            },
+            spendTime() {
+                let milliseconds = this.task.finishDate - this.task.beginDate;
+                let sec = Math.round(milliseconds / 1000);
+                let min = sec / 60;
+                let hour = min / 60;
+                let time = 'Дней: ' + Math.floor(hour / 24) +
+                    ', часов: ' + Math.floor(hour % 24) +
+                    ', минут: ' + Math.floor(min % 60) +
+                    ', секунд: ' + Math.floor(sec % 60);
+                return time;
+            }
         }
     }
+
+
 </script>
 
 <style lang="scss" scoped>
+    .responsible {
+        font-weight: 700;
+    }
+
     .v-cols-item-task {
         position: relative;
         margin-top: $margin*4;
@@ -70,7 +121,12 @@
         border-radius: $border-radius;
         padding: $padding*2;
         background-color: #fff;
-        min-height: 200px;
+        min-height: 250px;
+
+        &__content p {
+            margin-top: 10px;
+            text-align: left;
+        }
 
         &__button {
             position: absolute;

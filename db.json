@@ -4,34 +4,21 @@
         "title": "План",
         "tasks":
         [
-          {
-            "id": "1",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
-          },
-          {
-            "id": "2",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
-          }
+
         ]
       },
       {
         "title": "В работе",
         "tasks":
         [
-          {
-            "id": "3",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
-          }
+
         ]
       },
       {
         "title": "Готово",
         "tasks":
         [
-          {
-            "id": "4",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. In, necessitatibus?"
-          }
+
         ]
       }
     ]

@@ -1,5 +1,5 @@
 # kanban-board
-
+## [Ссылка на работающее приложение](http://vue-kanban-board.std-934.ist.mospolytech.ru)
 
 ## Project setup
 ```

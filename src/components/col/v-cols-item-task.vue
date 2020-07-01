@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import vModalWindow from '../v-modal-window'
+    import vModalWindow from '../v-modal-window';
 
     export default {
         name: "v-cols-item-task",
@@ -115,9 +115,9 @@
 
     .v-cols-item-task {
         position: relative;
-        margin-top: $margin*4;
+        margin: $margin*4 auto 0;
         height: 200px;
-        width: 90%;
+        width: 95%;
         border-radius: $border-radius;
         padding: $padding*2;
         background-color: #fff;

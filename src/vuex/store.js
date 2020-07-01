@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
+// import axios from 'axios';
 
 function setIcons(state) {
     for (let i = 0; i < state.cols.length - 1; i++) {
@@ -73,7 +73,20 @@ Vue.use(Vuex);
 
 let store = new Vuex.Store({
     state: {
-        cols: []
+        cols: [
+            {
+                "title": "План",
+                "tasks": []
+            },
+            {
+                "title": "В работе",
+                "tasks": []
+            },
+            {
+                "title": "Готово",
+                "tasks": []
+            }
+        ]
     },
     mutations: {
         SET_COLS_TO_STATE: (state, cols) => {
@@ -143,20 +156,20 @@ let store = new Vuex.Store({
         }
     },
     actions: {
-        GET_COLS_FROM_API({commit}) {
-            return axios('http://localhost:3000/cols', {
-                method: "GET"
-            })
-                .then((cols) => {
-                    commit('SET_COLS_TO_STATE', cols.data);
-                    return cols;
-
-                })
-                .catch((error) => {
-                    console.log(error);
-                    return error;
-                })
-        },
+        // GET_COLS_FROM_API({commit}) {
+        //     return axios('http://localhost:3000/cols', {
+        //         method: "GET"
+        //     })
+        //         .then((cols) => {
+        //             commit('SET_COLS_TO_STATE', cols.data);
+        //             return cols;
+        //
+        //         })
+        //         .catch((error) => {
+        //             console.log(error);
+        //             return error;
+        //         })
+        // },
         ADD_TASK({commit}, task) {
             commit('ADD_TASK_TO_COLS', task)
         },

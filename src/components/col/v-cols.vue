@@ -11,7 +11,7 @@
 
 <script>
     import vColsItem from '../col/v-cols-item';
-    import {mapActions, mapGetters} from 'vuex'
+    import {mapGetters} from 'vuex'
 
     export default {
         name: "v-cols",
@@ -20,9 +20,9 @@
         },
         components: {vColsItem},
         methods: {
-            ...mapActions([
-                'GET_COLS_FROM_API'
-            ]),
+            // ...mapActions([
+            //     'GET_COLS_FROM_API'
+            // ]),
         },
         computed: {
             ...mapGetters([

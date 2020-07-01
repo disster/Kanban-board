@@ -1,23 +1,28 @@
 <template>
     <div class="v-cols-item">
         <div class="v-cols-item__title">{{colData.title}} ({{colData.tasks.length}})</div>
-        <v-cols-item-task
-                v-for="task in colData.tasks"
-                :key="task.id"
-                :task="task"
-                @confirmTask="confirmTask"
-        ></v-cols-item-task>
+        <draggable class="draggable_area" :list='colData.tasks'>
+            <v-cols-item-task
+                    v-for="task in colData.tasks"
+                    :key="task.id"
+                    :task="task"
+                    @confirmTask="confirmTask"
+            ></v-cols-item-task>
+        </draggable>
     </div>
 </template>
 
 <script>
     import vColsItemTask from './v-cols-item-task';
     import {mapActions} from 'vuex';
+    import draggable from 'vuedraggable';
 
     export default {
         name: "v-cols-item",
         components: {
-            vColsItemTask
+            vColsItemTask,
+            draggable
+
         },
         props: {
             colData: {
@@ -61,6 +66,12 @@
         border-radius: 20px;
     }
 
+
+    .draggable_area {
+        width: 100%;
+        height: 100%;
+    }
+
     .v-cols-item {
         padding: $padding*3 $padding;
         border: 1px solid #ccc;
@@ -71,7 +82,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow-y:overlay;
+        overflow-y: overlay;
 
         &__title {
             font-size: 22px;

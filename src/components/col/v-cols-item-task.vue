@@ -109,6 +109,12 @@
 </script>
 
 <style lang="scss" scoped>
+    .v-main-wrapper.dark_theme {
+        .v-cols-item-task{
+            background-color: $dark-theme;
+            color: #fff;
+        }
+    }
     .responsible {
         font-weight: 700;
     }
@@ -126,6 +132,7 @@
         &__content p {
             margin-top: 10px;
             text-align: left;
+            word-break: break-all
         }
 
         &__button {

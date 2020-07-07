@@ -30,7 +30,7 @@
             ])
         },
         mounted() {
-            this.GET_COLS_FROM_API();
+            //this.GET_COLS_FROM_API();
         }
 
     }

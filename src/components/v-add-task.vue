@@ -6,7 +6,8 @@
                     class="v-add-task__input"
                     v-model="description"
                     placeholder="Описание задачи"
-                    type="text">
+                    type="text"
+            >
             <button class="v-add-task__button" @click="addTask">+</button>
         </div>
     </div>
@@ -27,15 +28,33 @@
                 'ADD_TASK'
             ]),
             addTask() {
-                this.ADD_TASK(this.description)
+                if (this.description != "") {
+                    this.ADD_TASK(this.description)
+                }
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    .v-main-wrapper.dark_theme {
+        .v-add-task {
+            color: #fff;
+
+            &__input {
+                background-color: $dark-theme;
+                color: #fff;
+            }
+
+            &__input::placeholder {
+                color: #fff;
+            }
+        }
+
+    }
+
     .v-add-task {
-        margin-top: 5vh;
+        margin-top: 1vh;
 
         &__content {
             border: 1px solid #E04623;

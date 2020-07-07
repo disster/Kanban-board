@@ -6,10 +6,11 @@
             <v-add-task></v-add-task>
             <v-cols></v-cols>
         </div>
+        <footer>
+            <a href="https://github.com/disster/Kanban-board">Ссылка на github проекта</a>,
+            Толпаров Пётр, 191-321
+        </footer>
     </div>
-    <footer>
-        <a href=""></a>
-    </footer>
 </template>
 
 <script>
@@ -41,16 +42,36 @@
     .v-main-wrapper {
         height: 100vh;
         padding-top: 30px;
+
         &__title {
             text-align: center;
             margin-top: 1vh;
             font-size: 40px;
         }
-        &.dark_theme{
+
+        &.dark_theme {
             background-color: $dark-theme;
-            .v-main-wrapper__title{
-                 color: #fff;
-             }
+
+            .v-main-wrapper__title {
+                color: #fff;
+            }
+        }
+    }
+
+    footer {
+        background-color: #58555c;
+        color: #fff;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        a {
+            color: #268afd;
+            text-decoration: underline;
         }
     }
 </style>

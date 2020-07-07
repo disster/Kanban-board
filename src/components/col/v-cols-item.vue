@@ -76,7 +76,7 @@
         padding: $padding*3 $padding;
         border: 1px solid #ccc;
         border-radius: $border-radius;
-        height: 70vh;
+        height: 65vh;
         width: 30%;
         text-align: center;
         display: flex;
